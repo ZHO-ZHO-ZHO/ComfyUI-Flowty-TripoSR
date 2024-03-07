@@ -139,8 +139,8 @@ class TripoSRViewer:
             })
             
             if len(mesh) > 1:
-            timestamp = datetime.now().strftime(save_path)
-            file_path = os.path.join(full_output_folder, timestamp)
+                timestamp = datetime.now().strftime(save_path)
+                file_path = os.path.join(full_output_folder, timestamp)
 
         return {"ui": {"mesh": saved}}
 

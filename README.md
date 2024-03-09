@@ -1,5 +1,13 @@
 # ComfyUI-Flowty-TripoSR-ZHO
 
+
+## 项目更新
+
+- 20240309 重构1.0：修改为直接保存3D文件的节点 Save TripoSR，新增很多基础参数
+
+  ![Dingtalk_20240309194002](https://github.com/ZHO-ZHO-ZHO/ComfyUI-Flowty-TripoSR-ZHO/assets/140084057/0fd3c9e8-4d07-4fdb-9a90-18d5b2c2c9f7)
+
+
 ## 我在原作者的基础上进行了修改，区别如下（已和原作者沟通，意见不同，所以作为独立分支）：
 
 1.是否内含背景去除功能
@@ -34,11 +42,19 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-Flowty-TripoSR/assets/140084057/f0e038c8-
 
 LayerDiffusion 和 TripoSR 简直绝配！所以设计了一版和 LayerDiffusion 衔接的工作流，由 LayerDiffusion 生成透明对象，然后直接通过 TripoSR 转为 3D 模型（用的是我这版节点）
 
+已更新为重构之后的新工作流（旧版工作流已不适用）：
+
+[NEW V1.0 LayerDIffusion + TripoSR【Zho】](https://github.com/ZHO-ZHO-ZHO/ComfyUI-Flowty-TripoSR-ZHO/blob/master/TRIPOSR-ZHO%20WORKFLOWS/NEW%20V1.0%20LayerDIffusion%20%2B%20TripoSR%E3%80%90Zho%E3%80%91.json)
+
+![Dingtalk_20240309193351](https://github.com/ZHO-ZHO-ZHO/ComfyUI-Flowty-TripoSR-ZHO/assets/140084057/99f1f03b-6873-42f1-ba7b-03082aa043d6)
+
+
+<!---
 [LayerDIffusion + TripoSR 【Zho】](https://github.com/ZHO-ZHO-ZHO/ComfyUI-Flowty-TripoSR/blob/master/TRIPOSR-ZHO%20WORKFLOWS/LayerDIffusion%20%2B%20TripoSR%E3%80%90Zho%E3%80%91.json)
 
 
 ![Dingtalk_20240305224540](https://github.com/ZHO-ZHO-ZHO/ComfyUI-Flowty-TripoSR/assets/140084057/fe05a7ef-6354-48e9-9b47-51207ac5814a)
-
+--->
 
 
 

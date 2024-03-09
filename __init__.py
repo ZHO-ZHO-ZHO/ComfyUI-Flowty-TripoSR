@@ -128,14 +128,10 @@ class SaveTripoSR_Zho:
                                                                                                 get_output_directory())
 
         for (batch_number, single_mesh) in enumerate(mesh):
-            # 构建文件名：基于 filename_prefix，counter 和 ".obj" 后缀
-            file = f"{filename_prefix}_{counter + batch_number:05}.obj"
-            file_path = os.path.join(full_output_folder, subfolder, file)
-
-            # 应用变换并导出网格
+            filename_with_batch_num = filename.replace("%batch_num%", str(batch_number))
+            file = f"{filename_with_batch_num}_{counter:05}_.obj"
             single_mesh.apply_transform(np.array([[1, 0, 0, 0], [0, 0, 1, 0], [0, -1, 0, 0], [0, 0, 0, 1]]))
-            single_mesh.export(file_path)
-
+            single_mesh.export(path.join(full_output_folder, file))
             saved.append({
                 "filename": file,
                 "type": "output",

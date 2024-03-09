@@ -159,6 +159,6 @@ app.registerExtension({
     },
 
     async beforeRegisterNodeDef(nodeType, nodeData, app) {
-        registerVisualizer(nodeType, nodeData, "TripoSRViewer", "threeVisualizer")
+        registerVisualizer(nodeType, nodeData, "SaveTripoSR_Zho", "threeVisualizer")
     },
 })

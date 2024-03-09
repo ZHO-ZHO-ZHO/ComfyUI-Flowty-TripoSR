@@ -22,7 +22,7 @@ def fill_background(image):
     return image
 
 
-class TripoSRModelLoader:
+class TripoSRModelLoader_Zho:
     def __init__(self):
         self.initialized_model = None
 
@@ -37,7 +37,7 @@ class TripoSRModelLoader:
 
     RETURN_TYPES = ("TRIPOSR_MODEL",)
     FUNCTION = "load"
-    CATEGORY = "Flowty TripoSR"
+    CATEGORY = "TripoSR ZHO"
 
     def load(self, model, chunk_size):
         device = get_torch_device()
@@ -57,7 +57,7 @@ class TripoSRModelLoader:
         return (self.initialized_model,)
 
 
-class TripoSRSampler:
+class TripoSRSampler_Zho:
 
     def __init__(self):
         self.initialized_model = None
@@ -77,7 +77,7 @@ class TripoSRSampler:
 
     RETURN_TYPES = ("MESH",)
     FUNCTION = "sample"
-    CATEGORY = "Flowty TripoSR"
+    CATEGORY = "TripoSR ZHO"
 
     def sample(self, tpsr_model, reference_image, do_remove_background, foreground_ratio, geometry_extract_resolution, marching_cude_threshold):
         outputs = []
@@ -107,55 +107,53 @@ class TripoSRSampler:
         return (outputs,)
 
 
-class TripoSRViewer:
+class SaveTripoSR_Zho:
     @classmethod
     def INPUT_TYPES(s):
         return {
             "required": {
                 "mesh": ("MESH",),
-                "save_path": ("STRING", {"default": 'Mesh_%Y-%m-%d-%M-%S-%f.obj', "multiline": False}),
+                "filename_prefix": ("STRING", {"default": "TripoSR"}),
             }
         }
 
     RETURN_TYPES = ()
     OUTPUT_NODE = True
     FUNCTION = "display"
-    CATEGORY = "Flowty TripoSR"
+    CATEGORY = "TripoSR ZHO"
 
-    def display(self, mesh, save_path):
+    def display(self, mesh, filename_prefix):
         saved = list()
-        full_output_folder, filename, counter, subfolder, filename_prefix = get_save_image_path("meshsave",
+        full_output_folder, filename, counter, subfolder, filename_prefix = get_save_image_path(filename_prefix,
                                                                                                 get_output_directory())
 
-        timestamp = datetime.now().strftime(save_path)
-        file_path = os.path.join(full_output_folder, timestamp)
-        
         for (batch_number, single_mesh) in enumerate(mesh):
+            # 构建文件名：基于 filename_prefix，counter 和 ".obj" 后缀
+            filename_with_counter = f"{filename_prefix}_{counter + batch_number:05}.obj"
+            file_path = os.path.join(full_output_folder, subfolder, filename_with_counter)
+
+            # 应用变换并导出网格
             single_mesh.apply_transform(np.array([[1, 0, 0, 0], [0, 0, 1, 0], [0, -1, 0, 0], [0, 0, 0, 1]]))
             single_mesh.export(file_path)
+
             saved.append({
-                "filename": os.path.basename(file_path),
+                "filename": filename_with_counter,
                 "type": "output",
                 "subfolder": subfolder
             })
-            
-            if len(mesh) > 1:
-                timestamp = datetime.now().strftime(save_path)
-                file_path = os.path.join(full_output_folder, timestamp)
 
         return {"ui": {"mesh": saved}}
 
-
 NODE_CLASS_MAPPINGS = {
-    "TripoSRModelLoader": TripoSRModelLoader,
-    "TripoSRSampler": TripoSRSampler,
-    "TripoSRViewer": TripoSRViewer
+    "TripoSRModelLoader_Zho": TripoSRModelLoader_Zho,
+    "TripoSRSampler_Zho": TripoSRSampler_Zho,
+    "SaveTripoSR_Zho": SaveTripoSR_Zho
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "TripoSRModelLoader": "TripoSR Model Loader",
-    "TripoSRSampler": "TripoSR Sampler",
-    "TripoSRViewer": "TripoSR Viewer"
+    "TripoSRModelLoader_Zho": "TripoSR Model Loader",
+    "TripoSRSampler_Zho": "TripoSR Sampler",
+    "SaveTripoSR_Zho": "Save TripoSR"
 }
 
 
